@@ -1,6 +1,6 @@
 # moveit
 <br>
-Essa aplicação foi desenvolvida com o objetivo de realizar atividades física para as pessoas que utilizam o computador, durante grande parte do seu tempo. A aplicação foi desenvolvida juntamente com o evento Next Level Week, sendo utilizada como método de ensino da tecnologia Next.js.
+Essa aplicação foi desenvolvida com o objetivo de realizar atividades física para as pessoas que utilizam o computador, durante grande parte do seu tempo. A aplicação foi desenvolvida juntamente com o evento Next Level Week realizada pela [https://rocketseat.com.br RocketSeat], sendo utilizada como método de ensino da tecnologia Next.js
 
 
 ## Conceitos utilizados
