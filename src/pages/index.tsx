@@ -1,65 +1,62 @@
-import { CompleteChallenges } from "../components/CompletedChallenges";
-import { Countdown } from "../components/Countdown";
-import { ExperienceBar } from "../components/ExperienceBar";
-import Profile from '../components/Profile';
-import styles from '../styles/pages/Home.module.css';
-import { ChallengeBox } from "../components/ChallengeBox";
-import { CountdownProvider } from '../contexts/CountdownContext';
-import { ChallengesContext, ChallengesProvider } from '../contexts/ChallengesContext';
+import Router from "next/router";
+import Head from "next/head";
+import React, { FormEvent, useContext, useEffect, useState } from "react";
+import { UserContext } from "../contexts/UserContext";
+import styles from "../styles/pages/login.module.css";
+import Cookies from "js-cookie";
 
-import { GetServerSideProps } from 'next';
+export default function Login() {
+  const [username, setUsername] = useState<string>("");
 
-import Head from 'next/head'
+  const { getInfoUser } = useContext(UserContext);
 
-interface HomePros {
-  level: number,
-  currentExperience: number,
-  challengesComplete: number,
-}
+  useEffect(() => {
+    const user = Cookies.get("user");
 
+    if (user) {
+      Router.push("/home");
+    }
+  }, []);
 
-export default function Home(props: HomePros) {
-
+  function handleSubmit(event: FormEvent) {
+    event.preventDefault();
+    getInfoUser(username);
+  }
 
   return (
-    <ChallengesProvider
-      level={props.level}
-      currentExperience={props.currentExperience}
-      challengesComplete={props.challengesComplete}
-    >
-      <div className={styles.container}>
-        <Head>
-          <title> Início | Move.it</title>
-        </Head>
-
-        <ExperienceBar />
-        <CountdownProvider>
-          <section>
-            <div>
-              <Profile />
-              <CompleteChallenges />
-              <Countdown />
-            </div>
-            <div>
-              <ChallengeBox />
-            </div>
-          </section>
-        </CountdownProvider>
-      </div>
-    </ChallengesProvider>
-  )
-}
-
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-
-  const { level, currentExperience, challengesComplete } = ctx.req.cookies;
-
-  return {
-    props: {
-      level: Number(level),
-      currentExperience: Number(currentExperience),
-      challengesComplete: Number(challengesComplete)
-    }
-  }
+    <>
+      <Head>
+        <title> Login | Move.it</title>
+      </Head>
+      <main className={styles.container}>
+        <img
+          src="/simbolo.png"
+          alt="Move.it"
+          className={styles.imgBackground}
+        />
+        <section className={styles.loginContent}>
+          <img src="/logo.png" alt="Logo Move.it" id={styles.logo} />
+          <h1>Bem-vindo</h1>
+          <div className={styles.githubInfo}>
+            <img src="/icons/github.svg" alt="Logo github" />
+            <p>Faça login com seu Github para começar</p>
+          </div>
+          <form onSubmit={handleSubmit}>
+            <input
+              type="text"
+              placeholder="Digite seu username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <button
+              type="submit"
+              className={`${username !== "" && styles.submit}`}
+            >
+              <img src="/icons/arrow-right.svg" alt="entrar" />
+            </button>
+          </form>
+        </section>
+      </main>
+    </>
+  );
 }
