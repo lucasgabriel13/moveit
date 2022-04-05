@@ -43,4 +43,7 @@ yarn dev
 O projeto estará disponível no seu navegador pelo endereço:
  [http://localhost:3000](http://localhost:3000)
 
+## 👨‍💻 Acesse a aplicação
+
+[Clique aqui para acessar!](https://moveit-one-pink.vercel.app/)
 
