@@ -5,6 +5,9 @@ import { UserContext } from "../contexts/UserContext";
 import styles from "../styles/pages/login.module.css";
 import Cookies from "js-cookie";
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export default function Login() {
   const [username, setUsername] = useState<string>("");
 
@@ -28,6 +31,7 @@ export default function Login() {
       <Head>
         <title> Login | Move.it</title>
       </Head>
+      <ToastContainer/>
       <main className={styles.container}>
         <img
           src="/simbolo.png"

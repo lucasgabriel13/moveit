@@ -1,5 +1,7 @@
 import Cookies from "js-cookie";
+import Router from "next/router";
 import { createContext, ReactNode, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { api } from "../services/api";
 
 interface UserProviderProps {
@@ -12,26 +14,36 @@ interface UserContextProps {
   getInfoUser: (username: string) => Promise<void>;
 }
 
+interface UserData {
+  name: string;
+  avatar_url: string;
+}
+
 export const UserContext = createContext({} as UserContextProps);
 
 export function UserProvider({ children }: UserProviderProps) {
   const [user, setUser] = useState("");
   const [avatar, setAvatar] = useState("");
 
-
   async function getInfoUser(username: string) {
-    const { data } = await api.get(`/${username}`);
+    try {
+      const { data } = await api.get<UserData>(`/${username}`);
 
-    if (data) {
-      setUser(data.name);
-      setAvatar(data.avatar_url);
+      if (data) {
+        setUser(data.name);
+        setAvatar(data.avatar_url);
 
-      const userData = {
-        name: data.name,
-        avatar_url: data.avatar_url,
-      };
+        const userData = {
+          name: data.name,
+          avatar_url: data.avatar_url,
+        };
 
-      Cookies.set("user", userData);
+        Cookies.set("user", userData);
+
+        Router.push("/home");
+      }
+    } catch (err) {
+      toast.error("Usuário não encontrado!");
     }
   }
 
